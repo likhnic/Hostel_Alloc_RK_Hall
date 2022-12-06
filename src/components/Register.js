@@ -12,6 +12,7 @@ const Register = () => {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'auth-token':localStorage.getItem('token')
             },
             body: JSON.stringify({ rollno: details.rollno, name: details.name, email: details.email, contact: details.contact, password: details.password })
         })
@@ -21,7 +22,7 @@ const Register = () => {
             navigate('/register')
         }
         else {
-            navigate('/login')
+            navigate('/')
         }
     }
 

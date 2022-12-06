@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = (props) => {
@@ -25,6 +26,12 @@ const Login = (props) => {
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
+
+    useEffect(()=>{
+        if(localStorage.getItem('token')){
+            navigate('/')
+        }
+    },[])
 
     return (
         <div className='my-4'>

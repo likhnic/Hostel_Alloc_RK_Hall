@@ -31,7 +31,6 @@ const Navbar = () => {
                         {!localStorage.getItem('token') &&
                             (<form action="" className="d-flex">
                                 <Link to="/login" className="btn btn-primary mx-2" role={"button"}>Login</Link>
-                                <Link to="/register" className="btn btn-primary mx-2" role={"button"}>Register</Link>
                             </form>)
                         }
                         {localStorage.getItem('token') &&
@@ -43,6 +42,9 @@ const Navbar = () => {
                             </>
                             )
                         }
+                        {localStorage.getItem('token') === 'Admin' && (
+                            <Link to="/register" className="btn btn-primary mx-2" role={"button"}>Register</Link>
+                        )}
                     </div>
                 </div>
             </nav>

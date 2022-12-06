@@ -3,7 +3,10 @@ import React, { useEffect, useState } from 'react'
 const Userdetails = () => {
 
     const [details, setDetails] = useState({ rollno: "", name: "", email: "", contact: "", block: "", room: "", roomid: "", password: "" })
+    const [loading, setLoading] = useState(false)
+
     const fetchUserDetails = async () => {
+        setLoading(false)
         const authToken = localStorage.getItem('token');
         const response = await fetch('https://rk-hall-alloc-api.onrender.com/userdetails', {
             method: 'GET',
@@ -17,6 +20,7 @@ const Userdetails = () => {
             return
         }
         await setDetails({ rollno: json.student.rollno, name: json.student.name, email: json.student.email, contact: json.student.contact, block: json.student.block, room: json.student.room, roomid: json.student.roomid, password: json.student.password })
+        setLoading(true)
     }
 
 
@@ -26,7 +30,7 @@ const Userdetails = () => {
 
     return (
         <div className="container mt-5">
-            <div className="row">
+            {loading && (<div className="row">
                 <div className="col-md-6">
                     Name:
                 </div>
@@ -57,7 +61,8 @@ const Userdetails = () => {
                 <div className="col-md-6">
                     {(details.roomid || details.roomid === 0) ? details.roomid : "Room is not yet assigned"}
                 </div>
-            </div>
+            </div>)}
+            {!loading && (<div>Loading...</div>)}
         </div>
     )
 }
