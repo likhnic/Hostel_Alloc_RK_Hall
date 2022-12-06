@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV !=="production"){
+    require('dotenv').config();
+}
+
 const express = require('express');
 const fetchuser = require('./fetchuser');
 const Student = require('./models/Student')
@@ -6,13 +10,19 @@ var cors = require('cors')
 const mongoose = require('mongoose');
 const mongoURI = "mongodb://localhost:27017/hostelalloc";
 
-const connectToMongo = async () => {
-    mongoose.connect(mongoURI, () => {
-        console.log("Database connected!");
-    })
-}
+const dbURL=process.env.DB_URL || mongoURI
 
-connectToMongo()
+mongoose.connect(dbURL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+});
+
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "connection error:"));
+db.once("open", () => {
+    console.log("Database connected!");
+});
+
 
 const app = express();
 app.use(express.urlencoded({ extended: false }));
@@ -128,5 +138,5 @@ app.post('/newdetails', fetchuser, async (req, res) => {
 })
 
 app.listen(process.env.PORT || 5000, () => {
-    console.log(`Listening to port ${process.env.PORT}`);
+    console.log(`Listening to port`);
 })
