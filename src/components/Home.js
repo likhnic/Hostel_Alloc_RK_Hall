@@ -19,7 +19,7 @@ const Home = () => {
     const handleOnClick = async (e) => {
         const room = Number(e.target.attributes.name.value)
         setLoading(false)
-        const response = await fetch(`http://localhost:5000/fetchDetails/${room}`, {
+        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/fetchDetails/${room}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
