@@ -5,7 +5,7 @@ const Userdetails = () => {
     const [details, setDetails] = useState({ rollno: "", name: "", email: "", contact: "", block: "", room: "", roomid: "", password: "" })
     const fetchUserDetails = async () => {
         const authToken = localStorage.getItem('token');
-        const response = await fetch('https://rk-hall-alloc-api.onrender.com5000/userdetails', {
+        const response = await fetch('https://rk-hall-alloc-api.onrender.com/userdetails', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
