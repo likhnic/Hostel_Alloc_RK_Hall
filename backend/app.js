@@ -35,8 +35,16 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.post('/register', async (req, res) => {
+app.get('/',(req, res)=>{
+    res.send({success:"Webiste is Live!!!"})
+})
+
+app.post('/register',async (req, res) => {
     try {
+        const token=req.header('auth-token')
+        if(token!=='Admin'){
+            return res.status(500).send({error:"Unauthorised User"})
+        }
         let student = await Student.findOne({ rollno: req.body.rollno });
         const { rollno, name, email, contact, password } = req.body
         if (student) {
