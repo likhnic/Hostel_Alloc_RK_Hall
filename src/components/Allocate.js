@@ -39,7 +39,6 @@ const Allocate = () => {
     }
 
     const onClick = (e) => {
-        console.log(e.target.name)
         setNewdetails({ ...newdetails, [e.target.name]: e.target.value })
     }
 
