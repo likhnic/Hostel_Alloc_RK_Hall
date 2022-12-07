@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Register = () => {
+const Register = (props) => {
 
     let navigate = useNavigate()
     const [details, setDetails] = useState({ rollno: "", name: "", password: "", contact: "", email: "" })
@@ -20,6 +20,7 @@ const Register = () => {
         const json = await response.json()
         if (json.error) {
             navigate('/register')
+            props.Error(json.error)
         }
         else {
             navigate('/')

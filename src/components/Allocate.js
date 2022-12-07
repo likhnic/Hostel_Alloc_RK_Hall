@@ -50,7 +50,9 @@ const Allocate = () => {
         <>
             <div className="container m-3">
                 <div className="row">
-                    <form >
+                    <div className="card">
+                        <div className="card-body">
+                        <form >
                         <div className="col-md-6 m-3">
                             <select className="form-select" name="roomid" aria-label="Default select example" onChange={onClick}>
                                 <option defaultValue={"Select Room"}>Select Room</option>
@@ -78,11 +80,13 @@ const Allocate = () => {
                                 })}
                             </select>
                         </div>
-                        <button type="submit" className="btn btn-primary m-3" onClick={handleOnClick}>Add Note</button>
+                        <button type="submit" className="btn btn-primary m-3" onClick={handleOnClick}>Change Room</button>
                     </form>
+                        </div>
+                    </div>
                 </div>
                 {(newdetails.rollno || newdetails.rollno === 0) && newdetails.roomid && (
-                    <div className="m-3">
+                    <div className="mt-3">
                         <Roomdetails details={newdetails} />
                     </div>
                 )}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Roomdetails from './Roomdetails'
 
-const Home = () => {
+const Home = (props) => {
 
     let navigate = useNavigate()
     const [rooms,] = useState([...Array(500).keys()])
@@ -30,6 +30,7 @@ const Home = () => {
         const json = await response.json()
         if (json.error) {
             navigate('/login')
+            props.Error(json.error)
             return
         }
         setDetails(json)

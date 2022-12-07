@@ -21,32 +21,40 @@ const Login = (props) => {
             localStorage.setItem('token', json.user)
             navigate('/')
         }
+        else {
+            console.log(json.error);
+            props.Error(json.error)
+        }
     }
 
     const onChange = (e) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value })
     }
 
-    useEffect(()=>{
-        if(localStorage.getItem('token')){
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
             navigate('/')
         }
-    },[])
+    }, [])
 
     return (
         <div className='my-4'>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
-                    <label htmlFor="rollno" className="form-label">Roll Number</label>
-                    <input type="text" className="form-control" value={credentials.rollno} onChange={onChange} id="rollno" name="rollno" />
-                </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input type="password" className="form-control" value={credentials.password} onChange={onChange} name="password" id="password" />
-                </div>
+            <div className="card">
+                <div className="card-body">
+                    <form onSubmit={handleSubmit}>
+                        <div className="mb-3">
+                            <label htmlFor="rollno" className="form-label">Roll Number</label>
+                            <input type="text" className="form-control" value={credentials.rollno} onChange={onChange} id="rollno" name="rollno" />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="password" className="form-label">Password</label>
+                            <input type="password" className="form-control" value={credentials.password} onChange={onChange} name="password" id="password" />
+                        </div>
 
-                <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
+                        <button type="submit" className="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
         </div>
     )
 }
