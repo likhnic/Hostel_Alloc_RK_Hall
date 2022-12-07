@@ -33,6 +33,9 @@ const Navbar = () => {
                                 <Link to="/login" className="btn btn-primary mx-2" role={"button"}>Login</Link>
                             </form>)
                         }
+                        {localStorage.getItem('token') === 'Admin' && (
+                            <Link to="/register" className="btn btn-primary mx-2" role={"button"}>Register</Link>
+                        )}
                         {localStorage.getItem('token') &&
                             (<>
                                 <Link className="btn btn-primary" role={"button"} to={"/userdetails"}><i className="fa-solid fa-user"></i></Link>
@@ -42,9 +45,6 @@ const Navbar = () => {
                             </>
                             )
                         }
-                        {localStorage.getItem('token') === 'Admin' && (
-                            <Link to="/register" className="btn btn-primary mx-2" role={"button"}>Register</Link>
-                        )}
                     </div>
                 </div>
             </nav>

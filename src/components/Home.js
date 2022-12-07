@@ -37,6 +37,7 @@ const Home = () => {
     }
 
     useEffect(() => {
+        
         redirectLogin()
     }, [])
 
@@ -48,7 +49,7 @@ const Home = () => {
                         return (
                             <div key={room} className="col-md-1 mt-3">
                                 <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" name={room} onClick={handleOnClick}>
-                                    {room}
+                                    Room {room}
                                 </button>
 
                                 <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
