@@ -10,6 +10,7 @@ import Userdetails from "./components/Userdetails";
 import Allocate from "./components/Allocate";
 import Register from "./components/Register";
 
+
 function App() {
     
     return (
