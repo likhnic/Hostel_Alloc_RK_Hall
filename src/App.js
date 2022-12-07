@@ -19,7 +19,7 @@ function App() {
             <Navbar />
             <div className="container">
                 <Routes>
-                    ( {<Route exact path="/" element={<Home/>} />})
+                    <Route exact path="/" element={<Home/>} />
                     <Route exact path="/login" element={<Login/>} />
                     <Route exact path="/userdetails" element={<Userdetails/>} />
                     <Route exact path="/allocate" element={<Allocate/>} />
