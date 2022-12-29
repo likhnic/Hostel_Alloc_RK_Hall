@@ -2,9 +2,10 @@ import React from 'react'
 
 const Roomdetails = (props) => {
     const { details } = props
+    
     return (
         <div>
-            {details.name && (<div className="card">
+            {details.name && (<div className="card m-2">
                 <div className="card-body">
                     <div className="row">
                         <div className="col-md-6">

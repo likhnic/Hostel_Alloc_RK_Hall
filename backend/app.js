@@ -5,11 +5,12 @@ if(process.env.NODE_ENV !=="production"){
 const express = require('express');
 const fetchuser = require('./fetchuser');
 const Student = require('./models/Student')
-var cors = require('cors')
-
+const Room = require('./models/Rooms')
 const mongoose = require('mongoose');
-const mongoURI = "mongodb://localhost:27017/hostelalloc";
+const cors = require('cors')
 
+
+const mongoURI = "mongodb://localhost:27017/hostelallocV2";
 const dbURL=process.env.DB_URL || mongoURI
 
 mongoose.connect(dbURL, {
@@ -25,8 +26,10 @@ db.once("open", () => {
 
 
 const app = express();
+app.use(cors())
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+
 app.use(function(req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -35,23 +38,23 @@ app.use(function(req, res, next) {
     next();
 });
 
-app.get('/',(req, res)=>{
-    res.send({success:"Webiste is Live!!!"})
+app.get('/', (req, res) => {
+    res.send({ success: "Webiste is Live!!!" })
 })
 
-app.post('/register',async (req, res) => {
+app.post('/register', async (req, res) => {
     try {
-        const token=req.header('auth-token')
-        if(token!=='Admin'){
-            return res.status(500).send({error:"Unauthorised User"})
+        const token = req.header('auth-token')
+        if (token !== 'Admin') {
+            return res.status(500).send({ error: "Unauthorised User" })
         }
         let student = await Student.findOne({ rollno: req.body.rollno });
         const { rollno, name, email, contact, password } = req.body
         if (student) {
             return res.status(400).json({ error: "Sorry student with the email already exists" })
         }
-        if(!rollno || !name || !email || !contact || !password){
-            return res.json({error:"Some feilds are empty!!"})
+        if (!rollno || !name || !email || !contact || !password) {
+            return res.json({ error: "Some feilds are empty!!" })
         }
         student = await Student.create({
             rollno: rollno,
@@ -86,10 +89,7 @@ app.post('/login', async (req, res) => {
 
 app.get('/fetchDetails/:roomid', fetchuser, async (req, res) => {
     const { roomid } = req.params
-    const student = await Student.findOne({ roomid })
-    if (!student) {
-        return res.json({})
-    }
+    const student = await Student.find({ roomid })
     return res.json(student)
 })
 
@@ -116,26 +116,31 @@ app.get('/userdetails', fetchuser, async (req, res) => {
     res.json({ student })
 })
 
+app.get('/roomlist', fetchuser, async (req, res) => {
+
+    let currRooms = await Room.find({})
+    return res.json({ currRooms })
+})
+
 app.get('/avail', fetchuser, async (req, res) => {
 
     if (req.user !== 'Admin') {
         return res.status(500).json({ error: "Unauthorised User" })
     }
-    let roomsAvail = [...Array(500).keys()]
+
+    let allrooms = await Room.find({})
     let userAvail = []
     const allStudents = await Student.find({})
     allStudents.map((u) => {
-        if (u.roomid) {
-            roomsAvail = roomsAvail.filter(item => item !== Number(u.roomid))
-        }
-        let curruser = {rollno:u.rollno, taken:((u.roomid || u.roomid===0)?1:0)} 
+        let curruser = { rollno: u.rollno, taken: ((u.roomid || u.roomid === 0) ? 1 : 0) }
         userAvail.push(curruser)
     })
+    let roomsAvail = allrooms.filter((room) => room.available !== 0)
     res.json({ roomsAvail, userAvail })
 })
 
-
 app.post('/newdetails', fetchuser, async (req, res) => {
+
     const { roomid, rollno } = req.body
     if (req.user !== 'Admin') {
         return res.status(500).json({ error: "Unauthorised User" })
@@ -144,10 +149,33 @@ app.post('/newdetails', fetchuser, async (req, res) => {
     studentNewDetails.roomid = roomid
     studentNewDetails.rollno = rollno
     let currdetails = await Student.findOne({ rollno })
+    let prevRoom
+    if (currdetails.roomid === roomid) {
+        return res.json({ currdetails })
+    }
+    else {
+        prevRoom = currdetails.roomid
+    }
     if (!currdetails) {
         return res.status(404).json({ error: "Page not found" })
     }
+    let currRoom = await Room.findOne({ roomid })
+    if (!currRoom) {
+        return res.status(500).json({ error: "Internal Server Error" })
+    }
+    if (currRoom.available === 0) {
+        return res.status(500).json({ error: "Room is not available" });
+    }
     currdetails = await Student.findOneAndUpdate({ rollno }, { $set: studentNewDetails }, { new: true })
+    currRoom.available -= 1
+    // updating availability of new room
+    await Room.findOneAndUpdate({ roomid }, { $set: { available: currRoom.available } }, { new: true })
+    // if student was in prev room, then remove him from that room, i.e., increase its availability
+    if (prevRoom) {
+        let prevFilled = await Room.findOne({ roomid: prevRoom })
+        prevFilled.available += 1;
+        await Room.updateOne({ roomid: prevRoom }, { $set: { available: prevFilled.available } }, { new: true })
+    }
     res.json({ currdetails })
 })
 

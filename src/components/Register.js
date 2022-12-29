@@ -8,7 +8,7 @@ const Register = (props) => {
 
     const handleOnSubmit = async (e) => {
         e.preventDefault()
-        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/register`, {
+        const response = await fetch(`http://localhost:5000/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
