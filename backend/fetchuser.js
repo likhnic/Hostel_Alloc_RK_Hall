@@ -1,7 +1,6 @@
 const jwt=require('jsonwebtoken')
 const SECRET = 'secrethaha'
 
-
 const fetchuser=async (req,res,next)=>{
 
     const token=req.header('auth-token')
