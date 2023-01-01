@@ -11,7 +11,6 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const cors = require('cors')
 
-
 const mongoURI = "mongodb://localhost:27017/hostelallocV2";
 const dbURL = process.env.DB_URL || mongoURI
 
@@ -40,9 +39,11 @@ app.use(function (req, res, next) {
     next();
 });
 
+
 app.get('/', (req, res) => {
     res.send({ success: "Webiste is Live!!!" })
 })
+
 
 app.post('/register', async (req, res) => {
     try {
@@ -78,6 +79,7 @@ app.post('/register', async (req, res) => {
         res.status(500).json({ error: "Internal Server error!" })
     }
 })
+
 
 app.post('/login', async (req, res) => {
     const { rollno, password } = req.body
@@ -124,11 +126,13 @@ app.post('/searchuser', fetchuser, async (req, res) => {
     else res.json({ error: "Please enter either Name(length>=3) or Roll No" })
 })
 
+
 app.get('/fetchDetails/:roomid', fetchuser, async (req, res) => {
     const { roomid } = req.params
     const student = await Student.find({ roomid }, { password: 0 })
     return res.json(student)
 })
+
 
 app.get('/userdetails', fetchuser, async (req, res) => {
 
@@ -152,11 +156,13 @@ app.get('/userdetails', fetchuser, async (req, res) => {
     res.json({ student })
 })
 
+
 app.get('/roomlist', fetchuser, async (req, res) => {
 
     let currRooms = await Room.find({}).sort({ "roomid": 1, "_id": 1 })
     return res.json({ currRooms })
 })
+
 
 app.get('/avail', fetchuser, async (req, res) => {
 
@@ -174,6 +180,7 @@ app.get('/avail', fetchuser, async (req, res) => {
     let roomsAvail = allrooms.filter((room) => room.available !== 0)
     res.json({ roomsAvail, userAvail })
 })
+
 
 app.post('/newdetails', fetchuser, async (req, res) => {
 
@@ -214,6 +221,7 @@ app.post('/newdetails', fetchuser, async (req, res) => {
     }
     res.json({ currdetails })
 })
+
 
 app.listen(process.env.PORT || 5000, () => {
     console.log(`Listening to port`);
