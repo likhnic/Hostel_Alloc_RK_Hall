@@ -10,7 +10,7 @@ const Searchuser = (props) => {
     const handleSubmit=async(e)=>{
         e.preventDefault();
         setResult([])
-        const response = await fetch('http://localhost:5000/searchuser', {
+        const response = await fetch('https://rk-hall-alloc-api.onrender.com/searchuser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

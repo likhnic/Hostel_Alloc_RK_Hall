@@ -8,7 +8,7 @@ const Allocate = () => {
     const [newdetails, setNewdetails] = useState({ rollno: "", roomid: "" })
 
     const fetchAvailability = async () => {
-        const response = await fetch(`http://localhost:5000/avail`, {
+        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/avail`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ const Allocate = () => {
 
     const handleOnClick = async (e) => {
         e.preventDefault()
-        const response = await fetch(`http://localhost:5000/newdetails`, {
+        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/newdetails`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
