@@ -8,7 +8,7 @@ const Allocate = () => {
     const [newdetails, setNewdetails] = useState({ rollno: "", roomid: "" })
 
     const fetchAvailability = async () => {
-        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/avail`, {
+        const response = await fetch(`http://localhost:5000/avail`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -24,7 +24,7 @@ const Allocate = () => {
 
     const handleOnClick = async (e) => {
         e.preventDefault()
-        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/newdetails`, {
+        const response = await fetch(`http://localhost:5000/newdetails`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -48,12 +48,12 @@ const Allocate = () => {
 
     return (
         <>
-            <div className="container m-3">
+            <div className="container">
                 <div className="row">
                     <div className="card">
                         <div className="card-body">
                         <form >
-                        <div className="col-md-6 m-3">
+                        <div className="col-lg-6 mt-3">
                             <select className="form-select" name="roomid" aria-label="Default select example" onChange={onClick}>
                                 <option defaultValue={"Select Room"}>Select Room</option>
                                 {rooms.map((room) => {
@@ -63,7 +63,7 @@ const Allocate = () => {
                                 })}
                             </select>
                         </div>
-                        <div className="col-md-6 m-3">
+                        <div className="col-lg-6 mt-3">
                             <select className="form-select" name="rollno" aria-label="Default select example" onChange={onClick}>
                                 <option defaultValue={"Select Room"}>Select Roll No</option>
                                 {students.map((student, i) => {
@@ -80,7 +80,7 @@ const Allocate = () => {
                                 })}
                             </select>
                         </div>
-                        <button type="submit" className="btn btn-primary m-3" onClick={handleOnClick}>Change Room</button>
+                        <button type="submit" className="btn btn-primary mt-3" onClick={handleOnClick}>Change Room</button>
                     </form>
                         </div>
                     </div>

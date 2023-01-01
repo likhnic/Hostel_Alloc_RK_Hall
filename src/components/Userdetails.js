@@ -8,7 +8,7 @@ const Userdetails = (props) => {
     const fetchUserDetails = async () => {
         setLoading(false)
         const authToken = localStorage.getItem('token');
-        const response = await fetch('https://rk-hall-alloc-api.onrender.com/userdetails', {
+        const response = await fetch('http://localhost:5000/userdetails', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -30,38 +30,38 @@ const Userdetails = (props) => {
     }, [localStorage.getItem('token')])
 
     return (
-        <div className="container mt-5">
+        <div className="container">
             <div className="card">
                 <div className="card-body">
                     {loading && (<div className="row">
-                        <div className="col-md-6">
+                        <div className="col-4 col-lg-5">
                             Name:
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-8 col-lg-5">
                             {details.name}
                         </div>
-                        <div className="col-md-6">
-                            Roll Number:
+                        <div className="col-4 col-lg-5">
+                            Roll No.:
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-8 col-lg-5">
                             {details.rollno}
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-4 col-lg-5">
                             Email:
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-8 col-lg-5">
                             {details.email}
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-4 col-lg-5">
                             Contact:
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-8 col-lg-5">
                             {details.contact}
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-4 col-lg-5">
                             Room:
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-8 col-lg-5">
                             {(details.roomid || details.roomid === 0) ? details.roomid : "Room is not yet assigned"}
                         </div>
                     </div>)}

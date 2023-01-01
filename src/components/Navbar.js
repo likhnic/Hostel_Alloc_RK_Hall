@@ -24,23 +24,26 @@ const Navbar = () => {
                             <li className="nav-item">
                                 <Link className={`nav-link ${location.pathname === '/' ? "active" : ""}`} aria-current="page" to="/">Home</Link>
                             </li>
+                            <li className="nav-item">
+                                <Link className={`nav-link ${location.pathname === '/searchuser' ? "active" : ""}`} aria-current="page" to="/searchuser">Search</Link>
+                            </li>
                             {localStorage.getItem('token') === 'Admin' && (<li className="nav-item">
                                 <Link className={`nav-link ${location.pathname === '/allocate' ? "active" : ""}`} aria-current="page" to="/allocate">Allocate Room</Link>
                             </li>)}
                         </ul>
                         {!localStorage.getItem('token') &&
                             (<form action="" className="d-flex">
-                                <Link to="/login" className="btn btn-primary mx-2" role={"button"}>Login</Link>
+                                <Link to="/login" className="btn btn-primary me-2" role={"button"}>Login</Link>
                             </form>)
                         }
                         {localStorage.getItem('token') === 'Admin' && (
-                            <Link to="/register" className="btn btn-primary mx-2" role={"button"}>Register</Link>
+                            <div><Link to="/register" className="btn btn-primary me-1" role={"button"}>Register</Link></div>
                         )}
                         {localStorage.getItem('token') &&
                             (<>
-                                <Link className="btn btn-primary" role={"button"} to={"/userdetails"}><i className="fa-solid fa-user"></i></Link>
+                                <Link className="btn btn-primary my-1 me-1" role={"button"} to={"/userdetails"}><i className="fa-solid fa-user"></i></Link>
                                 <form action="" className="d-flex">
-                                    <button className="btn btn-primary mx-2" onClick={handleLogout}>Logout</button>
+                                    <button className="btn btn-primary me-2" onClick={handleLogout}>Logout</button>
                                 </form>
                             </>
                             )

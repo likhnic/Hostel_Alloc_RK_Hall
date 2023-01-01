@@ -36,7 +36,7 @@ const Roomdetails = (props) => {
                             Room:
                         </div>
                         <div className="col-md-6">
-                            {details.roomid}
+                            {(details.roomid || details.roomid === 0) ? details.roomid : "Room is not yet assigned"}
                         </div>
                     </div>
                 </div>

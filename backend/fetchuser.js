@@ -1,4 +1,6 @@
-const Student = require('./models/Student')
+const jwt=require('jsonwebtoken')
+const SECRET = 'secrethaha'
+
 
 const fetchuser=async (req,res,next)=>{
 
@@ -11,14 +13,11 @@ const fetchuser=async (req,res,next)=>{
         return next()
     }
     try {
-        req.user = token
-        const curr = await Student.findOne({rollno:token})
-        if(curr.rollno!==token){
-            return res.status(401).json({error:"Unauthorised User"})
-        }
+        const data=jwt.verify(token,SECRET)
+        req.user = data.user
         return next()
     } catch (error) {
-        res.status(401).json({error:"Authenicate"})
+        res.status(401).json({error:"Authenicate using valid token"})
     }
 }
 

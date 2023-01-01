@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Roomdetails from './Roomdetails'
-import {data} from './roomData'
+import { data } from './roomData'
 
 const Home = (props) => {
 
     let navigate = useNavigate()
-    const [rooms,setRooms] = useState(data)
+    const [rooms, setRooms] = useState(data)
     const [mainload, setMainload] = useState(false)
-    let prev = 'Z'
     const [details, setDetails] = useState({ rollno: "", name: "", email: "", contact: "", block: "", room: "", roomid: "", password: "" })
     const [loading, setLoading] = useState(false)
     const redirectLogin = () => {
@@ -16,14 +15,14 @@ const Home = (props) => {
             navigate('/login')
             return
         }
-        else{
+        else {
             fetchRooms()
         }
     }
 
-    const fetchRooms = async() =>{
+    const fetchRooms = async () => {
         setMainload(false)
-        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/roomlist`, {
+        const response = await fetch(`http://localhost:5000/roomlist`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,7 +30,7 @@ const Home = (props) => {
             }
         })
 
-        const json=await response.json()
+        const json = await response.json()
         setRooms(json.currRooms)
         setMainload(true)
     }
@@ -40,7 +39,7 @@ const Home = (props) => {
     const handleOnClick = async (e) => {
         const room = (e.target.attributes.name.value)
         setLoading(false)
-        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/fetchDetails/${room}`, {
+        const response = await fetch(`http://localhost:5000/fetchDetails/${room}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,7 +58,7 @@ const Home = (props) => {
     }
 
     useEffect(() => {
-        
+
         redirectLogin()
     }, [])
 
@@ -68,10 +67,10 @@ const Home = (props) => {
             {mainload && (<div className="row">
                 {
                     rooms.map((room) => {
-  
+
                         return (
-                            <div key={room.roomid} className="col-md-1 mt-3">
-                                <button type="button" className={`btn btn-${room.available?"success":"danger"}`} data-bs-toggle="modal" data-bs-target="#exampleModal" name={room.roomid} onClick={handleOnClick}>
+                            <div key={room.roomid} className="col-3 col-lg-1 mt-3">
+                                <button type="button" className={`btn btn-${room.available ? (room.total === room.available ? "success" : "warning") : "danger"}`} data-bs-toggle="modal" data-bs-target="#exampleModal" name={room.roomid} onClick={handleOnClick}>
                                     Room {room.roomid}
                                 </button>
 
@@ -83,12 +82,12 @@ const Home = (props) => {
                                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div className="modal-body">
-                                                {loading && (details.map((detail)=>{
+                                                {loading && (details.map((detail) => {
                                                     return (
                                                         <Roomdetails key={detail.rollno} details={detail} />
                                                     )
                                                 }))}
-                                                {loading && (details.length===0 && (<div>Room is Free</div>))}
+                                                {loading && (details.length === 0 && (<div>Room is Free</div>))}
                                                 {!loading && (<div>Loading...</div>)}
                                             </div>
                                             <div className="modal-footer">
