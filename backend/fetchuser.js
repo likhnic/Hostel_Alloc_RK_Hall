@@ -1,5 +1,5 @@
-const jwt=require('jsonwebtoken')
-const SECRET = 'secrethaha'
+const jwt= require('jsonwebtoken');
+const SECRET = 'secrethaha';
 
 const fetchuser=async (req,res,next)=>{
 

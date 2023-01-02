@@ -4,12 +4,12 @@ if (process.env.NODE_ENV !== "production") {
 
 const express = require('express');
 const fetchuser = require('./fetchuser');
-const Student = require('./models/Student')
-const Room = require('./models/Rooms')
+const Student = require('./models/Student');
+const Room = require('./models/Rooms');
 const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const cors = require('cors')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const mongoURI = "mongodb://localhost:27017/hostelallocV2";
 const dbURL = process.env.DB_URL || mongoURI
@@ -27,7 +27,7 @@ db.once("open", () => {
 
 
 const app = express();
-app.use(cors())
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
