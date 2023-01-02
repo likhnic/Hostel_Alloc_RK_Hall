@@ -14,6 +14,8 @@ const cors = require('cors');
 const mongoURI = "mongodb://localhost:27017/hostelallocV2";
 const dbURL = process.env.DB_URL || mongoURI
 
+mongoose.set("strictQuery", false)
+
 mongoose.connect(dbURL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
