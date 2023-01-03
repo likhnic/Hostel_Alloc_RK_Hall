@@ -38,6 +38,7 @@ const Searchuser = (props) => {
         <div className="container mt-3">
             <div className="card">
                 <div className="card-body">
+                    <div>Enter either Roll No or Name to search</div>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="rollno" className="form-label">Roll No</label>
