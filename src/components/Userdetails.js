@@ -8,7 +8,7 @@ const Userdetails = (props) => {
     const fetchUserDetails = async () => {
         setLoading(false)
         const authToken = localStorage.getItem('token');
-        const response = await fetch('https://rk-hall-alloc-api.onrender.com/userdetails', {
+        const response = await fetch('http://localhost:5000/userdetails', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

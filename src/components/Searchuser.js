@@ -10,7 +10,7 @@ const Searchuser = (props) => {
     const handleSubmit=async(e)=>{
         e.preventDefault();
         setResult([])
-        const response = await fetch('https://rk-hall-alloc-api.onrender.com/searchuser', {
+        const response = await fetch('http://localhost:5000/searchuser', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,7 +38,7 @@ const Searchuser = (props) => {
         <div className="container mt-3">
             <div className="card">
                 <div className="card-body">
-                    <div>Enter either Roll No or Name to search</div>
+                    <h5 className='fw-bold'>Enter either Roll No or Name to search</h5>
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="rollno" className="form-label">Roll No</label>

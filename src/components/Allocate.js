@@ -8,7 +8,7 @@ const Allocate = () => {
     const [newdetails, setNewdetails] = useState({ rollno: "", roomid: "" })
 
     const fetchAvailability = async () => {
-        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/avail`, {
+        const response = await fetch(`http://localhost:5000/avail`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -19,12 +19,13 @@ const Allocate = () => {
         const json = await response.json()
         await setRooms(json.roomsAvail)
         await setStudents(json.userAvail)
+        console.log(json.userAvail)
     }
 
 
     const handleOnClick = async (e) => {
         e.preventDefault()
-        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/newdetails`, {
+        const response = await fetch(`http://localhost:5000/newdetails`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -67,14 +68,14 @@ const Allocate = () => {
                             <select className="form-select" name="rollno" aria-label="Default select example" onChange={onClick}>
                                 <option defaultValue={"Select Room"}>Select Roll No</option>
                                 {students.map((student, i) => {
-                                    if(student.taken){
+                                    if(student.taken===1){
                                         return (
-                                            <option key={i} value={student.rollno} className='special'>{student.rollno}</option>
+                                            <option key={i} value={student.rollno} className="special">{student.rollno}</option>
                                         )
                                     }
                                     else{
                                         return (
-                                            <option key={i} value={student.rollno} >{student.rollno}</option>
+                                            <option key={i} value={student.rollno}>{student.rollno}</option>
                                         )
                                     }
                                 })}
