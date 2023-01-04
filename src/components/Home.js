@@ -22,7 +22,7 @@ const Home = (props) => {
 
     const fetchRooms = async () => {
         setMainload(false)
-        const response = await fetch(`http://localhost:5000/roomlist`, {
+        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/roomlist`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -39,7 +39,7 @@ const Home = (props) => {
     const handleOnClick = async (e) => {
         const room = (e.target.attributes.name.value)
         setLoading(false)
-        const response = await fetch(`http://localhost:5000/fetchDetails/${room}`, {
+        const response = await fetch(`https://rk-hall-alloc-api.onrender.com/fetchDetails/${room}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
